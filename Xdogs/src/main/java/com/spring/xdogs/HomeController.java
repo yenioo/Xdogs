@@ -1,4 +1,4 @@
-package com.exem.xdogs;
+package com.spring.xdogs;
 
 import java.text.DateFormat;
 import java.util.Date;
