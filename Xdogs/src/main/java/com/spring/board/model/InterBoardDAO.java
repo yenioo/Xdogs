@@ -36,4 +36,7 @@ public interface InterBoardDAO {
 	// 하나의 게시판 목록
 	List<BoardVO> postList(String bno);
 
+	// 게시물 추가 처리하기
+	int postAddEnd(PostVO postvo);
+
 }

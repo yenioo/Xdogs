@@ -109,8 +109,11 @@
 		order by pno desc
 	</select>
 
-
-
+	<!-- 게시판 추가 처리하기 -->
+	<insert id="postAddEnd" parameterType="com.spring.board.model.PostVO">
+		insert into tbl_post(pno, fk_bno, fk_userid, psummary, psubject, pcontent, writeday, updateday, status, commentcount) 
+		values(seq_tbl_post.nextval, #{fk_bno}, #{fk_userid}, #{psummary}, #{psubject}, #{pcontent}, default, default, default , default)
+	</insert>
 
 
 

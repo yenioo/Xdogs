@@ -85,6 +85,13 @@ public class BoardDAO implements InterBoardDAO {
 	    return postList;
 	}
 
+	// 게시물 추가 처리하기
+	@Override
+	public int postAddEnd(PostVO postvo) {
+		int n = sqlsession.insert("board.postAddEnd", postvo);
+	    return n;
+	}
+
 	
 	
 	

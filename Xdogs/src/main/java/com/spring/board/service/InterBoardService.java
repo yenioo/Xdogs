@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.spring.board.model.BoardVO;
 import com.spring.board.model.MemberVO;
+import com.spring.board.model.PostVO;
 
 public interface InterBoardService {
 
@@ -38,6 +39,9 @@ public interface InterBoardService {
 
 	// 하나의 게시판 목록
 	List<BoardVO> postList(String bno);
+
+	// 게시물 추가 처리하기
+	int postAddEnd(PostVO postvo);
 	
 	
 

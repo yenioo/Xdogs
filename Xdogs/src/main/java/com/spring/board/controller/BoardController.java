@@ -22,6 +22,7 @@ import com.spring.board.common.MyUtil;
 import com.spring.board.common.Sha256;
 import com.spring.board.model.BoardVO;
 import com.spring.board.model.MemberVO;
+import com.spring.board.model.PostVO;
 import com.spring.board.service.InterBoardService;
 
 @Controller
@@ -113,11 +114,13 @@ public class BoardController {
 		
 		String loc = "";
 		// 이전에 활동하던 페이지가 있다라면
+		loc = request.getContextPath()+"/index.com";
+		/*
 		if(goBackURL != null) { 
 			loc = request.getContextPath()+goBackURL;  // session 에 저장된 키값 goBackURL 페이지로 이동
 		} else {
 			loc = request.getContextPath()+"/index.com";
-		}
+		} */
 		
 		mav.addObject("loc", loc);
 		mav.setViewName("message");
@@ -322,26 +325,52 @@ public class BoardController {
 	    // 페이징 처리를 안한 하나의 게시판 페이지 전체 글목록 보여주기
 		postList = service.postList(bno);
 		
+		mav.addObject("bno", bno);
 		mav.addObject("bsubject", bsubject);
 		mav.addObject("postList", postList);
 		mav.setViewName("board/oneBoardList"); 
 		return mav;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 	// 게시물 추가 모달창
 	@RequestMapping(value="/postAdd.com")
 	public ModelAndView postAdd(ModelAndView mav, HttpServletRequest request) {
+		
+		String bno = request.getParameter("bno");
+		// System.out.println("-- bno : " +bno);
+		
+		mav.addObject("bno", bno);
 		mav.setViewName("board/postAdd");
 		
 		return mav;
 	}
+	
+	// 게시물 추가 처리하기
+	@RequestMapping(value="/postAddEnd.com", method= {RequestMethod.POST})
+	public ModelAndView postAddEnd(ModelAndView mav, PostVO postvo) {
+
+		System.out.println(postvo.toString());
+		int n = service.postAddEnd(postvo);
+		
+		String message = "";
+		String loc = "";
+		
+		if(n==1) { 
+			// 성공시
+			loc = "history.go(0)";
+		}
+		else { 
+			// 실패시
+			loc = "history.back()";
+		}
+		
+		mav.addObject("message", message);
+		mav.addObject("loc", loc);
+		mav.setViewName("message");
+		return mav;
+	}
+	
+	
 	
 	// 게시물 보기 모달창
 	@RequestMapping(value="/postView.com")

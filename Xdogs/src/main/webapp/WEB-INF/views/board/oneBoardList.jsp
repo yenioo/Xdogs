@@ -94,15 +94,18 @@
 		
 	});// end of $(document).ready(function(){})-------------------------
 	
-	function goPostAdd() {  // 게시물 추가버튼 클릭시
+	
+	// 게시물 추가버튼 클릭시
+	function goPostAdd(bno) {
+	  
 	  // 게시물 추가 팝업창 띄우기 (GET 방식). postAdd.java 클래스에 넘겨준다.
-	  const url = "<%= ctxPath%>/postAdd.com";
+	  const url = "<%= ctxPath%>/postAdd.com?bno="+bno;
 	  window.open(url, "postAdd", 
 	  			"left=380px, top=50px, width=750px, height=650px"); // 팝업창 띄우기(url, 팝업창이름, "팝업창 크기지정")  *url 은 보여줄 페이지(boardAdd.java) 이다.
 	}// end of function goPostAdd(){}----------------------------
 
-	
-	function goPostView() {  // 게시물 보기
+	// 게시물 보기
+	function goPostView() {
 	  // 게시물 보기 팝업창 띄우기 (GET 방식). postView.java 클래스에 넘겨준다.
 	  const url = "<%= ctxPath%>/postView.com";
 	  window.open(url, "postView", 
@@ -124,12 +127,13 @@
 	<br>
 	<span style="margin-bottom: 30px;">
 		<span style="float: left;"><h2>게시판명</h2></span> <!-- 추후 생략할 것 !!!  -->
-		<input type="text" name="boardName" id="boardName" value="${requestScope.bsubject}" readonly /> <!-- 추가한 게시판명 끌어오기 -->
+		<input type="text" name="boardName" id="boardName" value="${requestScope.bsubject}" readonly />
+		<input type="hidden" name="bno" id="bno" value="${requestScope.bno}" />
 	</span>  
 	
 	
 	<div class="text-center" style="display: block; margin-bottom: 20px; margin-top: 25px;">
-		<a id="btnPostAdd" href="javascript:goPostAdd();" style="float: right; margin: 0 53px 10px 10px;">게시물 추가</a>
+		<a id="btnPostAdd" href="javascript:goPostAdd('${requestScope.bno}');" style="float: right; margin: 0 53px 10px 10px;">게시물 추가</a>
 	</div>
 	
 	<c:if test="${not empty requestScope.postList}">

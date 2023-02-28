@@ -62,9 +62,6 @@
     	background-clip: padding-box, border-box;
 	}
 	
-	
-	
-	
 	form#boardAdd_frm {
 	  	padding: 65px 0;
 	    margin: 0 auto;
@@ -106,6 +103,13 @@
 	 	opacity: 1;
 	}
 	
+	.error {
+		color: rgb(0 101 204);
+		font-size: 9pt;
+		margin-left: 20px;
+		font-weight: normal;
+	}
+	
 	/* 게시판추가 버튼 */
 	button#btnBoardAdd {
 		border-style: none;
@@ -130,28 +134,6 @@
 	$(document).ready(function(){
 		
 		
-		/* 
-		if(${sessionScope.loginuser} == '') {
-			$('btnBoardAdd').prop('disabled', true);
-		} else {
-			$('btnBoardAdd').prop('disabled', false);
-		} */
-		
-		<%-- if(${sessionScope.loginuser.userid} == null || "".equals(${sessionScope.loginuser.userid})) {
-			// 회원이 아니라면
-			
-			$("#btnBoardAdd").attr("disabled", true);
-			
-			const bool = confirm("게시판 추가는  회원만 가능합니다. <br>회원가입 페이지로 이동하시겠습니까?");
-		    if(bool) {
-		    	location.href="<%=ctxPath%>/memberRegister.com";
-		    } else {
-		    	location.href="<%=ctxPath%>/index.com";
-		    }
-		    
-		}  --%>
-		
-		
 	});// end of $(document).ready(function(){})-------------------------
 	
 	
@@ -162,7 +144,8 @@
 		const bsubject = $("input#bsubject").val().trim();
 		console.log("bsubject" + bsubject);
 		if(bsubject == "") {
-			alert("게시판명을 입력하세요.");
+			$(".subjectAlert").show();
+			// alert("게시판명을 입력하세요.");
 			return; // 종료
 		}
 		
@@ -184,7 +167,7 @@
 		<div id="boardAdd_box" class="d-flex flex-column m-auto">
 
 			<div id="input_board" class="d-flex flex-column"> 
-				<div class="subject" style="font-weight: 600; font-size: 13.5pt;">게시판명<span class="error nameAlert" style="display:none;">게시판명을 입력해주세요.</span></div>
+				<div class="subject" style="font-weight: 600; font-size: 13.5pt;">게시판명<span class="error subjectAlert" style="display:none;">게시판명을 입력해주세요.</span></div>
 				<input type="text" name="bsubject" id="bsubject" size="50" placeholder="게시판명" required> 
 			</div>
 			

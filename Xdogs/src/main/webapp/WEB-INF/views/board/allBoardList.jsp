@@ -156,17 +156,47 @@
 	// 게시판 추가버튼 클릭시
     function goBoardAdd() {  
       // 게시판 추가 팝업창 띄우기 (GET 방식). oneBoardList.java 클래스에 넘겨준다.
-      const url = "<%= ctxPath%>/boardAdd.com";
-      window.open(url, "boardAdd", 
-      			"left=550px, top=100px, width=400px, height=400px"); // 팝업창 띄우기(url, 팝업창이름, "팝업창 크기지정")   *url 은 보여줄 페이지(boardAdd.java) 이다.
+      
+      if('${sessionScope.loginuser.userid}' == null || '${sessionScope.loginuser.userid}' == '') {
+			// $('btnBoardAdd').prop('disabled', true);
+			
+			const bool = confirm("게시판 추가는  회원만 가능합니다. 회원가입 페이지로 이동하시겠습니까?");
+		    if(bool) {
+		    	location.href="<%=ctxPath%>/memberRegister.com";
+		    } else {
+		    	location.href="<%=ctxPath%>/index.com";
+		    }
+			
+		} else {
+			// $('btnBoardAdd').prop('disabled', false);
+			
+			const url = "<%= ctxPath%>/boardAdd.com";
+	        window.open(url, "boardAdd", 
+	      			"left=550px, top=100px, width=400px, height=400px"); // 팝업창 띄우기(url, 팝업창이름, "팝업창 크기지정")   *url 은 보여줄 페이지(boardAdd.java) 이다.
+		} 
+		
+		<%-- if(${sessionScope.loginuser.userid} == null || "".equals(${sessionScope.loginuser.userid})) {
+			// 회원이 아니라면
+			
+			$("#btnBoardAdd").attr("disabled", true);
+			
+			const bool = confirm("게시판 추가는  회원만 가능합니다. <br>회원가입 페이지로 이동하시겠습니까?");
+		    if(bool) {
+		    	location.href="<%=ctxPath%>/memberRegister.com";
+		    } else {
+		    	location.href="<%=ctxPath%>/index.com";
+		    }
+		    
+		} --%>
+      
 	}
 	
 	
 	 // 하나의 게시판 페이지로 이동
 	 function goBoardView(bno) {
 		 
-		const gobackURL = "${requestScope.gobackURL}";  // BoardController.java 에서 넘겨준 키값 gobackURL
-	 	location.href="<%= ctxPath%>/oneBoardList.com?bno="+bno+"&gobackURL="+gobackURL;
+		//const gobackURL = "${requestScope.gobackURL}";  // BoardController.java 에서 넘겨준 키값 gobackURL
+	 	location.href="<%= ctxPath%>/oneBoardList.com?bno="+bno;
 	 }
 		 
 </script>

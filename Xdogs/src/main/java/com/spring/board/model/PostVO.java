@@ -109,6 +109,13 @@ public class PostVO {
 	public void setCommentcount(String commentcount) {
 		this.commentcount = commentcount;
 	}
+
+	@Override
+	public String toString() {
+		return "PostVO [pno=" + pno + ", fk_bno=" + fk_bno + ", fk_userid=" + fk_userid + ", psummary=" + psummary
+				+ ", psubject=" + psubject + ", pcontent=" + pcontent + ", writeday=" + writeday + ", updateday="
+				+ updateday + ", status=" + status + ", commentcount=" + commentcount + "]";
+	}
     
 	
 	

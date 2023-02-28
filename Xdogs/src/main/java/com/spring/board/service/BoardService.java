@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.spring.board.model.BoardVO;
 import com.spring.board.model.InterBoardDAO;
 import com.spring.board.model.MemberVO;
+import com.spring.board.model.PostVO;
 
 @Service
 public class BoardService implements InterBoardService {
@@ -86,6 +87,14 @@ public class BoardService implements InterBoardService {
 		List<BoardVO> postList = dao.postList(bno);
 	    return postList;
 	}
+
+	// 게시물 추가 처리하기
+	@Override
+	public int postAddEnd(PostVO postvo) {
+		int n = dao.postAddEnd(postvo);
+	    return n;
+	}
+
 
 	
 
