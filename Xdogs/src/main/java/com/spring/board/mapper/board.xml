@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==== 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+<mapper namespace="board">
+
+	<!-- 로그인 처리하기  -->
+	<select id="getLogin" resultType="com.spring.board.model.MemberVO" parameterType="HashMap">
+		select userid, pwd, name, mobile, postcode, address, detailaddress, extraaddress, birthday, registerday, status
+		from tbl_member
+		where status = 1 and userid = #{userid} and pwd = #{pwd}
+	</select>
+
+	<!--회원가입 처리하기  -->
+	<insert id="memberRegister" parameterType="com.spring.board.model.MemberVO">
+		insert into tbl_member(userid, pwd, name, mobile, postcode, address, detailaddress, extraaddress, birthday, registerday, status) 
+		values(#{userid}, #{pwd}, #{name}, null, null, null, null, null, null, default, default)
+	</insert>
+
+	<!-- 아이디 중복확인 -->
+	<select id="getIdDuplicateCheck" resultType="String" parameterType="String">
+		select count(*)
+		from tbl_member
+		where userid = #{useridCheck}
+	</select>
+	
+	<!-- 비밀번호 업데이트 -->
+	<update id="goUpdatePwd" parameterType="HashMap">
+		update tbl_member set pwd = #{pwd} 
+		where userid = #{userid}
+	</update>
+	
+	<!-- 탈퇴 처리하기 -->
+	<delete id="goDelMember" parameterType="String">
+		delete from tbl_member
+		where userid = #{userid}
+	</delete>
+
+
+	<!-- 게시판 목록 -->
+	<select id="boardList" resultType="com.spring.board.model.BoardVO">
+	    <!-- select bno, fk_userid, bsubject, to_char(updateday, 'yyyy.mm.dd hh24:mi') AS updateday
+	    from tbl_board
+	    where status = 1
+	    order by bno desc -->
+	    with 
+		A as 
+		(select bno, fk_userid, bsubject, to_char(updateday, 'yyyy.mm.dd hh24:mi') AS updateday, status
+		from tbl_board
+		),
+		B as
+		(select substr(userid,1,instr(userid,'@')-1) AS fk_userid, userid
+		from 
+		(select userid
+		from tbl_member) v)
+		select A.bno, B.fk_userid, A.bsubject, A.updateday, A.status
+		FROM A JOIN B
+		ON A.fk_userid = B.userid
+		where status = 1
+		order by bno desc
+	</select>
+
+	<!-- 게시판 삭제 -->
+	<delete id="goBoardDel" parameterType="HashMap">
+		delete from tbl_board
+		where bno in
+		<foreach collection="bnoArr" index="i" open="(" separator="," close=")">
+			'${bnoArr[i]}'
+		</foreach>
+	</delete>
+
+	<!-- 게시판 추가 처리하기 -->
+	<insert id="boardAddEnd" parameterType="com.spring.board.model.BoardVO">
+		insert into tbl_board(bno, fk_userid, bsubject, updateday, status) 
+		values(seq_tbl_board.nextval, #{fk_userid}, #{bsubject}, default, default)
+	</insert>
+
+	<!-- 조회하고자 하는 게시판 번호 받아오기 -->
+	<select id="getBoardName" parameterType="string" resultType="String">
+		select bsubject
+		from tbl_board
+		where bno = #{bno}
+	</select>
+
+	<!-- 하나의 게시판 목록 -->
+	<select id="postList" parameterType="string" resultType="com.spring.board.model.PostVO">
+		<!-- select pno, fk_bno, fk_userid, psummary, psubject, pcontent, to_char(writeday, 'yyyy.mm.dd hh24:mi') AS writeday,
+			   to_char(updateday, 'yyyy.mm.dd hh24:mi') AS updateday, status, commentcount
+		from tbl_post
+		where fk_bno = #{bno}
+	    order by pno desc -->
+	    with 
+		A as 
+		(select pno, fk_bno, fk_userid, psummary, psubject, pcontent, to_char(writeday, 'yyyy.mm.dd hh24:mi') AS writeday,
+		       to_char(updateday, 'yyyy.mm.dd hh24:mi') AS updateday, status, commentcount
+		from tbl_post
+		),
+		B as
+		(select substr(userid,1,instr(userid,'@')-1) AS fk_userid, userid
+		from 
+		(select userid
+		from tbl_member) v)
+		select A.pno, A.fk_bno, B.fk_userid, A.psummary, A.psubject, A.pcontent, A.writeday, A.updateday, A.status, A.commentcount
+		FROM A JOIN B
+		ON A.fk_userid = B.userid
+		where status = 1 and fk_bno = #{bno}
+		order by pno desc
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
+
