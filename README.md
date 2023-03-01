@@ -42,8 +42,7 @@
 - **API** <br>
 ```Toast Editor```
 - **라이브러리** <br>
-```Bootstrap5``` ```EL/JSTL``` ```JDBC``` ```JQuery``` ```AES256```
-
+```AES256``` ```Bootstrap5``` ```EL/JSTL``` ```JDBC``` ```JQuery```
 
 <br>
 <br>
@@ -52,16 +51,22 @@
 
 - **로그인**
 
+
 - **회원가입**
+
 
 - **정보수정**
 
+
 - **게시판**
 
+
 <br>
 <br>
 
+## 📚 프로젝트 산출물
 - **DB 설계**<br>
+
 
 
 
