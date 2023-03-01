@@ -26,28 +26,7 @@
 
 ## 🛠 개발환경
 - **OS** <br>
-```windows 10``` ```Mac```
-- **Framework** <br>
-```Spring Framework```
-- **Server** <br>
-```Apache Tomcat 9.0```
-- **DataBase** <br>
-```Oracle Database```
-- **Developer Tools** <br>
-```STS3``` ```Eclipse``` ```SqlDeveloper```
-- **Front-end** <br>
-```HTML5``` ```CSS``` ```Javascript``` ```JSP``` ```Ajax``` ```Json```
-- **Back-end** <br>
-```Java(JDK 1.8)``` ```Maven``` ```Spring WebSocket``` ```MyBatis```
-- **API** <br>
-```Google Mail``` ```Daum 주소찾기``` ```Fullcalendar-5.10``` ```Flatpickr``` ```Toast Editor``` ```Chart.js``` ```Jspdf``` ```Html2canvas```
-- **라이브러리** <br>
-```Bootstrap5``` ```EL/JSTL``` ```JDBC``` ```JQuery```
-
-
-## 🛠 개발환경
-- **OS** <br>
-```windows 10** <br>
+```windows 10```
 - **Framework** <br>
 ```Spring Framework```
 - **Server** <br>
@@ -63,7 +42,8 @@
 - **API** <br>
 ```Toast Editor```
 - **라이브러리** <br>
-```AES256``` ```Bootstrap5``` ```EL/JSTL``` ```JDBC``` ```JQuery``` 
+```Bootstrap5``` ```EL/JSTL``` ```JDBC``` ```JQuery```
+
 
 <br>
 <br>
