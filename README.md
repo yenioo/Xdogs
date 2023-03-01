@@ -50,8 +50,7 @@
 ## 🔎 화면설계 및 기능구현
 
 - **로그인**
-<img src = "[Your Image Addr](https://user-images.githubusercontent.com/110097691/222144825-b8a204ac-dffd-4315-acb3-fdf0263d6c7b.png)" width="100" height="60">
-![로그인](https://user-images.githubusercontent.com/110097691/222144825-b8a204ac-dffd-4315-acb3-fdf0263d6c7b.png) 
+<img src = "[Your Image Addr](https://user-images.githubusercontent.com/110097691/222144825-b8a204ac-dffd-4315-acb3-fdf0263d6c7b.png)" width="100" height="60%">
 
 - **회원가입**
 
