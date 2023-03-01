@@ -50,9 +50,11 @@
 ## 🔎 화면설계 및 기능구현
 
 - **로그인**
+- 
 ![로그인](https://user-images.githubusercontent.com/110097691/222144825-b8a204ac-dffd-4315-acb3-fdf0263d6c7b.png) 
 
 - **회원가입**
+- 
 ![회원가입](https://user-images.githubusercontent.com/110097691/222145084-65745b16-d315-464d-9828-d26fe323b0eb.png)
 
 - **정보수정**
