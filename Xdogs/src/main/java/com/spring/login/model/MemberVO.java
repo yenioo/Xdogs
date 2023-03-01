@@ -1,4 +1,4 @@
-package com.spring.board.model;
+package com.spring.login.model;
 
 public class MemberVO {
 

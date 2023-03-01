@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==== 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+<mapper namespace="login">
+
+	<!-- 로그인 처리하기  -->
+	<select id="getLogin" resultType="com.spring.login.model.MemberVO" parameterType="HashMap">
+		select userid, pwd, name, mobile, postcode, address, detailaddress, extraaddress, birthday, registerday, status
+		from tbl_member
+		where status = 1 and userid = #{userid} and pwd = #{pwd}
+	</select>
+
+	<!--회원가입 처리하기  -->
+	<insert id="memberRegister" parameterType="com.spring.login.model.MemberVO">
+		insert into tbl_member(userid, pwd, name, mobile, postcode, address, detailaddress, extraaddress, birthday, registerday, status) 
+		values(#{userid}, #{pwd}, #{name}, null, null, null, null, null, null, default, default)
+	</insert>
+
+	<!-- 아이디 중복확인 -->
+	<select id="idDuplicateCheck" parameterType="String" resultType="int">
+		select count(*)
+		from tbl_member
+		where userid = #{userid}
+	</select>
+	
+	<!-- 비밀번호 업데이트 -->
+	<update id="goUpdatePwd" parameterType="HashMap">
+		update tbl_member set pwd = #{pwd} 
+		where userid = #{userid}
+	</update>
+	
+	<!-- 탈퇴 처리하기 -->
+	<delete id="goDelMember" parameterType="String">
+		delete from tbl_member
+		where userid = #{userid}
+	</delete>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
+

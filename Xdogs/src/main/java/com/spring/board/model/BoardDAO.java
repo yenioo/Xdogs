@@ -14,42 +14,6 @@ public class BoardDAO implements InterBoardDAO {
 	@Resource
 	private SqlSessionTemplate sqlsession;
 
-	// 로그인 처리하기
-	@Override
-	public MemberVO getLogin(Map<String, String> paraMap) {
-		MemberVO loginuser = sqlsession.selectOne("board.getLogin", paraMap);
-		return loginuser;
-	}
-
-	// 회원가입 처리하기
-	@Override
-	public int memberRegister(MemberVO mvo) {
-		int n = sqlsession.insert("board.memberRegister", mvo);
-		return n;
-	}
-
-	// 아이디 중복확인
-	@Override
-	public int idDuplicateCheck(String userid) {
-		int n = sqlsession.selectOne("board.idDuplicateCheck", userid);
-		return n;
-	}
-
-
-	// 비밀번호 업데이트
-	@Override
-	public int goUpdatePwd(Map<String, String> paraMap) {
-		int n = sqlsession.update("board.goUpdatePwd", paraMap);
-		return n;
-	}
-
-	// 탈퇴 처리하기
-	@Override
-	public int goDelMember(String userid) {
-		int n = sqlsession.delete("board.goDelMember", userid);
-		return n;
-	}
-
 	// ********** 게시판 ********** //
 	// 게시판 목록
 	@Override

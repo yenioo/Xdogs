@@ -6,45 +6,8 @@
 <!-- ==== 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
 <mapper namespace="board">
 
-	<!-- 로그인 처리하기  -->
-	<select id="getLogin" resultType="com.spring.board.model.MemberVO" parameterType="HashMap">
-		select userid, pwd, name, mobile, postcode, address, detailaddress, extraaddress, birthday, registerday, status
-		from tbl_member
-		where status = 1 and userid = #{userid} and pwd = #{pwd}
-	</select>
-
-	<!--회원가입 처리하기  -->
-	<insert id="memberRegister" parameterType="com.spring.board.model.MemberVO">
-		insert into tbl_member(userid, pwd, name, mobile, postcode, address, detailaddress, extraaddress, birthday, registerday, status) 
-		values(#{userid}, #{pwd}, #{name}, null, null, null, null, null, null, default, default)
-	</insert>
-
-	<!-- 아이디 중복확인 -->
-	<select id="idDuplicateCheck" parameterType="String" resultType="int">
-		select count(*)
-		from tbl_member
-		where userid = #{userid}
-	</select>
-	
-	<!-- 비밀번호 업데이트 -->
-	<update id="goUpdatePwd" parameterType="HashMap">
-		update tbl_member set pwd = #{pwd} 
-		where userid = #{userid}
-	</update>
-	
-	<!-- 탈퇴 처리하기 -->
-	<delete id="goDelMember" parameterType="String">
-		delete from tbl_member
-		where userid = #{userid}
-	</delete>
-
-
 	<!-- 게시판 목록 -->
 	<select id="boardList" resultType="com.spring.board.model.BoardVO">
-	    <!-- select bno, fk_userid, bsubject, to_char(updateday, 'yyyy.mm.dd hh24:mi') AS updateday
-	    from tbl_board
-	    where status = 1
-	    order by bno desc -->
 	    with 
 		A as 
 		(select bno, fk_userid, bsubject, to_char(updateday, 'yyyy.mm.dd hh24:mi') AS updateday, status
@@ -86,11 +49,6 @@
 
 	<!-- 하나의 게시판 목록 -->
 	<select id="postList" parameterType="string" resultType="com.spring.board.model.PostVO">
-		<!-- select pno, fk_bno, fk_userid, psummary, psubject, pcontent, to_char(writeday, 'yyyy.mm.dd hh24:mi') AS writeday,
-			   to_char(updateday, 'yyyy.mm.dd hh24:mi') AS updateday, status, commentcount
-		from tbl_post
-		where fk_bno = #{bno}
-	    order by pno desc -->
 	    with 
 		A as 
 		(select pno, fk_bno, fk_userid, psummary, psubject, pcontent, to_char(writeday, 'yyyy.mm.dd hh24:mi') AS writeday,
@@ -121,11 +79,6 @@
 		from tbl_post
 		where pno = #{pno}
 	</select>
-	<!-- <select id="postView" parameterType="string" resultType="com.spring.board.model.PostVO">
-		select pno, fk_bno, fk_userid, psummary, psubject, pcontent, writeday, updateday, status, commentcount
-		from tbl_post
-		where pno = #{pno}
-    </select> -->
 
 	<!-- 게시물 1개 삭제하기 -->
 	<delete id="postDelEnd" parameterType="string">

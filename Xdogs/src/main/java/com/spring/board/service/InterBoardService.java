@@ -5,26 +5,10 @@ import java.util.Map;
 
 import com.spring.board.model.BoardVO;
 import com.spring.board.model.CommentVO;
-import com.spring.board.model.MemberVO;
 import com.spring.board.model.PostVO;
 
 public interface InterBoardService {
-
-	// 로그인 처리하기
-	MemberVO getLogin(Map<String, String> paraMap);
-
-	// 회원가입 처리하기
-	int memberRegister(MemberVO mvo);
-
-	// 아이디 중복확인
-	int idDuplicateCheck(String userid);
-
-	// 비밀번호 업데이트
-	int goUpdatePwd(Map<String, String> paraMap);
-
-	// 탈퇴 처리하기
-	int goDelMember(String userid);
-
+	
 	// ********** 게시판 ********** //
 	// 게시판 목록
 	List<BoardVO> boardList();
