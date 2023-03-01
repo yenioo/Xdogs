@@ -122,36 +122,47 @@
 	// 게시판 삭제 클릭시
 	function goBoardDel() {
 		
-		var chxArr = $("input[name='bno']:checked");
-		var bnoArr = new Array();
-		chxArr.each(function(index, item){
-			bnoArr.push($(item).parent().parent().attr("id"));
-		});
+		if('${sessionScope.loginuser.userid}' == null || '${sessionScope.loginuser.userid}' == '') {
+    		// 회원이 아니라면
+			// $('btnBoardAdd').prop('disabled', true);
+    		alert("게시판 삭제는 회원만 가능합니다. 또한, 본인이 작성한 게시판만 삭제 가능합니다.");
+			
+		} else {
+			// 회원이라면
 		
-		if(bnoArr.length < 1){
-			alert("삭제할 게시판을 선택해주세요.");
-		}
-		
-		$.ajax({	 
-			url: "<%= ctxPath%>/boardDel.com",
-			traditional: true,
-			data: {"bnoArr":bnoArr},
-			dataType:"json",
-			success:function(json){
-				// console.log(JSON.stringify(json));
-				
-				if(json.n < 1){
-					alert("게시판 삭제가 실패되었습니다.");
-				} else {
-					location.reload();
-					alert("게시판이 삭제되었습니다.");
-				}
-			},
-			error: function(request, status, error){
-				alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+			var chxArr = $("input[name='bno']:checked");
+			var bnoArr = new Array();
+			chxArr.each(function(index, item){
+				bnoArr.push($(item).parent().parent().attr("id"));
+			});
+			
+			if(bnoArr.length < 1){
+				alert("삭제할 게시판을 선택해주세요.");
 			}
-		});
-    }
+			
+			$.ajax({	 
+				url: "<%= ctxPath%>/boardDel.com",
+				traditional: true,
+				data: {"bnoArr":bnoArr},
+				dataType:"json",
+				success:function(json){
+					// console.log(JSON.stringify(json));
+					
+					if(json.n < 1){
+						alert("게시판 삭제가 실패되었습니다.");
+					} else {
+						location.reload();
+						alert("게시판이 삭제되었습니다.");
+					}
+				},
+				error: function(request, status, error){
+					alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+				}
+			});
+	    }
+	}
+	
+	
 	
 	// 게시판 추가버튼 클릭시
     function goBoardAdd() {  
