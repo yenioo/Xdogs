@@ -66,7 +66,9 @@
 
 ## 📚 프로젝트 산출물
 - **DB 설계**<br>
+<br>
 ![물리_exerd](https://user-images.githubusercontent.com/110097691/222140506-d5900a65-ee21-4c3a-bb20-ca3775bfbe05.png)
+![논리_exerd](https://user-images.githubusercontent.com/110097691/222140674-55a790cb-8926-4638-9593-d3a969ed2750.png)
 
 
 
