@@ -1,8 +1,8 @@
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=yenioo&show_icons=true&theme=dark)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=yenioo&layout=compact&theme=tokyonight)
-
 # Xdogs
 반려견 커뮤니티 사이트 Xdogs
+
+![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=yenioo&show_icons=true&theme=dark)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=yenioo&layout=compact&theme=tokyonight)
 
 
 ## 목차
