@@ -1,7 +1,6 @@
 # Xdogs
 반려견 커뮤니티 사이트 Xdogs
 
-[![Top Langs](https://github.com/yenioo)]
 
 ## 목차
 [📌 프로젝트 소개](#-프로젝트-소개)<br>
