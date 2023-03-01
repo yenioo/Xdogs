@@ -50,17 +50,20 @@
 ## 🔎 화면설계 및 기능구현
 
 - **로그인**
-- 
+ 
 ![로그인](https://user-images.githubusercontent.com/110097691/222144825-b8a204ac-dffd-4315-acb3-fdf0263d6c7b.png) 
 
 - **회원가입**
-- 
+
 ![회원가입](https://user-images.githubusercontent.com/110097691/222145084-65745b16-d315-464d-9828-d26fe323b0eb.png)
 
 - **정보수정**
+
 ![회원정보 수정](https://user-images.githubusercontent.com/110097691/222145142-04bd047c-4595-4e65-84af-b140d1f9cdac.png)
 
+
 - **게시판**
+
 ![녹화_2023_03_01_22_08_03_592](https://user-images.githubusercontent.com/110097691/222148638-ff68af1b-b2af-419b-b420-cd3436da2363.gif)
 
 <br>
