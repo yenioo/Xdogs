@@ -42,7 +42,7 @@
 - **API** <br>
 ```Toast Editor```
 - **라이브러리** <br>
-```Bootstrap5``` ```EL/JSTL``` ```JDBC``` ```JQuery```
+```Bootstrap5``` ```EL/JSTL``` ```JDBC``` ```JQuery``` ```AES256```
 
 
 <br>
