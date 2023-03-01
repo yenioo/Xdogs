@@ -30,10 +30,11 @@ public class BoardDAO implements InterBoardDAO {
 
 	// 아이디 중복확인
 	@Override
-	public String getIdDuplicateCheck(String useridCheck) {
-		String userid = sqlsession.selectOne("board.getIdDuplicateCheck", useridCheck);
-		return userid;
+	public int idDuplicateCheck(String userid) {
+		int n = sqlsession.selectOne("board.idDuplicateCheck", userid);
+		return n;
 	}
+
 
 	// 비밀번호 업데이트
 	@Override
@@ -45,7 +46,7 @@ public class BoardDAO implements InterBoardDAO {
 	// 탈퇴 처리하기
 	@Override
 	public int goDelMember(String userid) {
-		int n = sqlsession.insert("board.goDelMember", userid);
+		int n = sqlsession.delete("board.goDelMember", userid);
 		return n;
 	}
 
@@ -60,7 +61,7 @@ public class BoardDAO implements InterBoardDAO {
 	// 게시판 삭제
 	@Override
 	public int goBoardDel(Map<String, String[]> paraMap) {
-		int n = sqlsession.insert("board.goBoardDel", paraMap);
+		int n = sqlsession.delete("board.goBoardDel", paraMap);
 		return n;
 	}
 	
@@ -91,6 +92,57 @@ public class BoardDAO implements InterBoardDAO {
 		int n = sqlsession.insert("board.postAddEnd", postvo);
 	    return n;
 	}
+
+	// 게시물 1개 조회하기
+	@Override
+	public PostVO postView(String pno) {
+		PostVO postvo = sqlsession.selectOne("board.postView", pno);
+		return postvo;
+	}
+
+	// 게시물 1개 삭제하기 
+	@Override
+	public int postDelEnd(String pno) {
+		int n = sqlsession.insert("board.postDelEnd", pno);
+		return n;
+	}
+
+	// 게시물 수정 처리하기
+	@Override
+	public int postEditEnd(PostVO postvo) {
+		int n = sqlsession.insert("board.postEditEnd", postvo);
+	    return n;
+	}
+
+	// 댓글 조회하기
+	@Override
+	public List<CommentVO> getCommentListPaging(Map<String, String> paraMap) {
+		List<CommentVO> commentList = sqlsession.selectList("board.getCommentListPaging", paraMap);
+		return commentList;
+	}
+
+	// 하나의 게시물당 댓글의 totalPage 수 알아오기
+	@Override
+	public int commentTotalPage(Map<String, String> paraMap) {
+		int totalPage = sqlsession.selectOne("board.commentTotalPage", paraMap);
+		return totalPage; 
+	}
+
+	// 댓글쓰기(Ajax 처리)
+	@Override
+	public int addComment(CommentVO commentvo) {
+		int n = sqlsession.insert("board.addComment", commentvo);
+		return n;
+	}
+
+	// 본인 댓글 삭제하기(Ajax 처리)
+	@Override
+	public int commentDel(String cno) {
+		int n = sqlsession.delete("board.commentDel", cno);
+		return n;
+	}
+
+	
 
 	
 	

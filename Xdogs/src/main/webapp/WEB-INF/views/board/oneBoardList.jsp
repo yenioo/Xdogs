@@ -105,13 +105,12 @@
 	}// end of function goPostAdd(){}----------------------------
 
 	// 게시물 보기
-	function goPostView() {
+	function goPostView(pno) {
 	  // 게시물 보기 팝업창 띄우기 (GET 방식). postView.java 클래스에 넘겨준다.
-	  const url = "<%= ctxPath%>/postView.com";
+	  const url = "<%= ctxPath%>/postView.com?pno="+pno+"&bno="+bno;
 	  window.open(url, "postView", 
 	  			"left=380px, top=50px, width=750px, height=650px"); // 팝업창 띄우기(url, 팝업창이름, "팝업창 크기지정")  *url 은 보여줄 페이지(postView.java) 이다.
 	}// end of function goPostView(){}----------------------------
-	
 	
 	
 	
@@ -151,8 +150,8 @@
 			<tbody>
 				<c:forEach var="postvo" items="${requestScope.postList}" varStatus="status">
 				    <tr>
-				       <td align="left"><span class="subject" onclick="goPostView('${boardvo.pno}')">${postvo.psubject}</span></td>
-				       <td align="left"><span class="summary" onclick="goPostView('${boardvo.pno}')">${postvo.psummary}</span></td>
+				       <td align="left"><span class="subject" onclick="goPostView('${postvo.pno}')">${postvo.psubject}</span></td>
+				       <td align="left"><span class="summary" onclick="goPostView('${postvo.pno}')">${postvo.psummary}</span></td>
 				       <td align="center">${postvo.writeday}</td>
 				       <td align="center">${postvo.updateday}</td>
 				       <td align="center">${postvo.fk_userid}</td>

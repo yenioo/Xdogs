@@ -12,7 +12,7 @@ public interface InterBoardDAO {
 	int memberRegister(MemberVO mvo);
 
 	// 아이디 중복확인
-	String getIdDuplicateCheck(String useridCheck);
+	int idDuplicateCheck(String userid);
 
 	// 비밀번호 업데이트
 	int goUpdatePwd(Map<String, String> paraMap);
@@ -39,4 +39,35 @@ public interface InterBoardDAO {
 	// 게시물 추가 처리하기
 	int postAddEnd(PostVO postvo);
 
+	// 게시물 1개 조회하기
+	PostVO postView(String pno);
+
+	// 게시물 1개 삭제하기 
+	int postDelEnd(String pno);
+
+	// 게시물 수정 처리하기
+	int postEditEnd(PostVO postvo);
+
+	// 댓글 조회하기
+	List<CommentVO> getCommentListPaging(Map<String, String> paraMap);
+
+	// 하나의 게시물당 댓글의 totalPage 수 알아오기
+	int commentTotalPage(Map<String, String> paraMap);
+
+	// 댓글쓰기(Ajax 처리)
+	int addComment(CommentVO commentvo);
+
+	// 본인 댓글 삭제하기(Ajax 처리)
+	int commentDel(String cno);
+
+	
+
+
+	
+	
+	
+	
+	
+	
+	
 }

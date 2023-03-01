@@ -209,9 +209,6 @@
         frm.action = "<%= ctxPath%>/postAddEnd.com";
         frm.submit();
 		
-		// 팝업창에서 부모창 함수 호출
-		<%-- opener.location.href="<%= ctxPath%>/oneBoardList.com"; --%>
-    	// self.close(); // 팝업창 닫기
 	}	
 	
 </script>

@@ -75,9 +75,13 @@
 	
 	#idCheck {
 		color:#333333;
-		height: 38px;
 		border-style: none;
-		border-radius: 5%;
+		width: 13%;
+	    font-weight: bold;
+	    border-radius: 7%;
+	    font-size: 10.5pt;
+	    padding: 0 1px;
+	    height: 41px;
 	}
 	
 	input:focus, select:focus {
@@ -127,48 +131,70 @@
 
 <script type="text/javascript">
 let b_flag_idDuplicate_click = false; // 아이디중복확인 클릭여부 확인용
-var code = ""; // 이메일인증용
-var b_emailSendCheck = false;
-var b_emailCheck = false;
-var emailCheck = false;
 
 $(document).ready(function(){
 
-	<%-- 
-	//"아이디중복확인" 을 클릭했을 때 이벤트 처리하기
-	$("button#idCheck").click(function () {
-	  b_flag_idDuplicate_click = true;
-
-	  $.ajax({
-	    url: "<%= ctxPath%>/idDuplicateCheck.com",
-	    data:{"userid":$("input#userid").val()},
-		type:"post",
-	    success: function (text) {
-	      const json = JSON.parse(text);
-
-	      if(json.isExists){
-	    	    // 입력한 userid 가 이미 사용중이라면
-				$("span#idcheckResult").html($("input#userid").val()+" 은 중복된 아이디 이므로 사용불가 합니다.").css("color", "red");
-				$("input#userid").val("");  // 입력란에서 값 비워버리기
-			} else {
-				// 입력한 userid 가 존재하지 않는 경우라면
-				$("span#idcheckResult").html($("input#userid").val()+" 은 사용가능 합니다.").css("color", "navy");
-			}
-	    },
-	    error: function(request, status, error){
-	        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-	    }
-	  });
-	  
-	}); // end of $("button#idcheck").click(function() {})---------------------
-
-	$("input#userid").bind("change", () => {  
-		b_flag_idDuplicate_click = false;  
-		// 초기화시킴. true 가 되어야지만 넘어감.
-	}); --%>
-	
+	// 아이디값이 변경되면 가입하기 버튼을 클릭시 "아이디중복확인" 을 클릭했는지 클릭안했는지를 알아보기위한 용도 초기화 시키기
+	$('input#userid').bind('change', () => {
+	  b_flag_idDuplicate_click = false;
+	});
 	
 });// end of $(document).ready(function(){})---------------
+
+
+// 아이디 중복확인 처리
+function goIdDuplicate(){
+	
+	/* if(userid == null || userid == "" ) {
+		$(".useridAlert").html($("input#userid").val()+" 은 중복된 아이디 이므로 사용불가 합니다.").show();
+	} */
+	
+	const emailReg = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+	const userid = $("input#userid").val();
+	if(!emailReg.test(userid) || userid == null || userid == ""){
+		$("#userid").focus();
+		$(".useridAlert").html("이메일 형식에 맞지 않습니다.").show();
+		return;
+	} else {
+		$(".useridAlert").hide();
+		
+		$.ajax({
+			  url: "<%= ctxPath%>/idDuplicateCheck.com",
+			  data:{"userid":$("input#userid").val()},
+			  type:"POST",
+			  dataType:"JSON",
+			  success:function(json){
+					const n  = json.n;
+					console.log("n >>" + n);
+					if(n==1) {
+			  
+						// 입력한 userid 가 이미 사용중이라면
+						$(".useridAlert").html($("input#userid").val()+" 은 중복된 아이디 이므로 사용불가 합니다.").show();
+						$("input#userid").val("");  // 입력란에서 값 비워버리기
+						b_flag_idDuplicate_click = false;  // 초기화시킴. true 가 되어야지만 넘어감.
+						return;
+						
+						//$("span#idcheckResult").html($("input#userid").val()+" 은 중복된 아이디 이므로 사용불가 합니다.").css("color", "red");
+						//$("input#userid").val("");  // 입력란에서 값 비워버리기 
+					
+					} else {
+						// 입력한 userid 가 존재하지 않는 경우라면
+						$(".useridAlert").html($("input#userid").val()+" 은 사용가능 합니다.").show();
+						b_flag_idDuplicate_click = true; // 중복확인 버튼 클릭 확인용
+						
+						//$("span#idcheckResult").html($("input#userid").val()+" 은 사용가능 합니다.").css("color", "navy");
+					}
+			    
+			  },
+			  error: function(request, status, error){
+			      alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+			  }
+			});
+		
+	}
+	
+}
+
 
 
 // 가입하기
@@ -221,56 +247,17 @@ function goRegister(){
 		// 클릭 안 했을 경우
 	    alert('중복확인을 클릭해주세요.');
 	    return;
+	    
 	} else {
 		// 클릭 했을 경우
-		$.ajax({
-		    url: "<%= ctxPath%>/idDuplicateCheck.com",
-		    data:{"userid":$("input#userid").val()},
-			type:"post",
-		    success: function (text) {
-		      const json = JSON.parse(text);
-
-		      if(json.isExists != 0){
-		    	    // 입력한 userid 가 이미 사용중이라면
-					$("span#idcheckResult").html($("input#userid").val()+" 은 중복된 아이디 이므로 사용불가 합니다.").css("color", "red");
-					$("input#userid").val("");  // 입력란에서 값 비워버리기
-					
-					b_flag_idDuplicate_click = false;  // 초기화시킴. true 가 되어야지만 넘어감.
-					return;
-					
-				} else {
-					// 입력한 userid 가 존재하지 않는 경우라면
-					$("span#idcheckResult").html($("input#userid").val()+" 은 사용가능 합니다.").css("color", "navy");
-				}
-		    },
-		    error: function(request, status, error){
-		        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-		    }
-		  });
-		
+		//goIdDuplicate();
 	}
-	
 	
     // 아이디값이 변경되면 가입하기 버튼을 클릭시 "아이디중복확인" 을 클릭했는지 클릭안했는지를 알아보기위한 용도 초기화 시키기
 	$('input#userid').bind('change', () => {
 	  b_flag_idDuplicate_click = false;
 	});
 
-	
-	
-	/* if(!b_emailSendCheck){
-		$(".emailAlert").text("이메일 인증을 해주세요.");
-		$(".emailAlert").show();
-		$("#emailCheck").focus();
-		return;
-	}
-	
-	if(!b_emailCheck){
-		$(".emailAlert").text("인증번호를 확인해주세요.");
-		$(".emailAlert").show();
-		$("#confirmEmail").focus();
-		return;
-	} */
 	
 	const frm = document.registerFrm;
 	frm.method = "post";
@@ -296,8 +283,7 @@ function goRegister(){
 			
 			<div style="vertical-align: middle;" class="subject">이메일<span class="error useridAlert" style="display:none;">이메일 형식에 맞지 않습니다.</span></div>
 			<input type="text" class="required" id="userid"  name="userid" placeholder="이메일 입력" style="width: 53%; margin-right: 8px;"/>
-			<button id="idCheck">중복확인</button>
-			<span id="idcheckResult"></span>
+			<input type="button" id="idCheck" onclick="goIdDuplicate()" value="중복확인"/>
   	  			
 			<div class="subject">비밀번호<span id="pwdAlert" class="pwdAlert" style="font-size: 9pt; color: #666666; margin-left: 15px;">비밀번호는 8자~15자 영문,숫자,특수문자로 입력하세요.</span></div>
 			<input type="password" class="required" id="pwd" name="pwd" size="50" placeholder="비밀번호 입력" />

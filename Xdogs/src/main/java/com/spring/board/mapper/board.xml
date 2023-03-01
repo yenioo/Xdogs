@@ -20,10 +20,10 @@
 	</insert>
 
 	<!-- 아이디 중복확인 -->
-	<select id="getIdDuplicateCheck" resultType="String" parameterType="String">
+	<select id="idDuplicateCheck" parameterType="String" resultType="int">
 		select count(*)
 		from tbl_member
-		where userid = #{useridCheck}
+		where userid = #{userid}
 	</select>
 	
 	<!-- 비밀번호 업데이트 -->
@@ -115,18 +115,76 @@
 		values(seq_tbl_post.nextval, #{fk_bno}, #{fk_userid}, #{psummary}, #{psubject}, #{pcontent}, default, default, default , default)
 	</insert>
 
+	<!-- 게시물 1개 조회하기 -->
+	<select id="postView" parameterType="string" resultType="com.spring.board.model.PostVO">
+		select pno, fk_bno, fk_userid, psummary, psubject, pcontent, writeday, updateday, status, commentcount
+		from tbl_post
+		where pno = #{pno}
+	</select>
+	<!-- <select id="postView" parameterType="string" resultType="com.spring.board.model.PostVO">
+		select pno, fk_bno, fk_userid, psummary, psubject, pcontent, writeday, updateday, status, commentcount
+		from tbl_post
+		where pno = #{pno}
+    </select> -->
 
+	<!-- 게시물 1개 삭제하기 -->
+	<delete id="postDelEnd" parameterType="string">
+		delete from tbl_post
+		where pno = #{pno}
+	</delete>
 
+	<!-- 게시물 수정 처리하기 -->
+	<update id="postEditEnd" parameterType="com.spring.board.model.PostVO">
+		update tbl_post set psubject = #{psubject},
+		                    psummary = #{psummary},
+		                    pcontent = #{pcontent}
+		where pno = #{pno}
+	</update>
+	
+	<!-- 댓글 조회하기 -->
+	<select id="getCommentListPaging" parameterType="HashMap" resultType="com.spring.board.model.CommentVO">
+		with 
+		A as 
+		(
+		select cno, fk_pno, fk_userid, content, writeday, status
+		from
+		(
+		    select row_number() over(order by cno desc) AS rno, status, cno,
+		           fk_pno, fk_userid, content, to_char(writeday, 'yyyy.mm.dd') AS writeday
+		    from tbl_comment
+		) V
+		where rno between #{startRno} and #{endRno}
+		),
+		B as
+		(select substr(userid,1,instr(userid,'@')-1) AS fk_userid, userid
+		from 
+		(select userid
+		from tbl_member) v)
+		select A.cno, A.fk_pno, B.fk_userid, A.content, A.writeday, A.status
+		FROM A JOIN B
+		ON A.fk_userid = B.userid
+		where status = 1 and fk_pno = #{fk_pno}
+		order by cno desc
+	</select>
 
+	<!-- 하나의 게시물당 댓글의 totalPage 수 알아오기 -->
+	<select id="commentTotalPage" parameterType="HashMap" resultType="int">
+		select ceil(count(*)/#{sizePerPage})
+		from tbl_comment
+		where status = 1 and fk_pno = #{fk_pno}
+	</select>
 
+	<!-- 댓글쓰기(Ajax 처리) -->
+	<insert id="addComment" parameterType="com.spring.board.model.CommentVO">
+		insert into tbl_comment(cno, fk_pno, fk_userid, content, writeday, status) 
+		values(seq_tbl_comment.nextval, #{fk_pno}, #{fk_userid}, #{content}, default, default)
+	</insert>
 
-
-
-
-
-
-
-
+	<!-- 본인 댓글 삭제하기(Ajax 처리) -->
+	<delete id="commentDel" parameterType="String">
+		delete from tbl_comment
+		where cno = #{cno}
+	</delete>
 
 
 

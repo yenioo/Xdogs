@@ -142,33 +142,64 @@
 
 	$(document).ready(function(){
 		
-		// 수정하기 버튼 클릭시 
-		$("button#btnPostEdit").click(function(){
-			// 팝업창에서 부모창 함수 호출 ==> 아래코드 보고있었던 게시물로 이동 ★★★★★★★
-			opener.location.href="<%= ctxPath%>/postView.com"; 
-        	self.close(); // 팝업창 닫기
-		});
-		
-		
-		<%-- 텍스트 에디터 시작 --%>
-		editor = new toastui.Editor({
-		    el: document.querySelector("#editor"),
-		    height: "270px",
-		    initialEditType: "wysiwyg",
-		    hooks: {
-		      addImageBlobHook: function (blob, callback) {
-		        const formData = new FormData();
-		        formData.append("image", blob);
-		        const imageURL = imageUpload(formData);
-		        // console.log(imageURL);
-		        callback(imageURL, "image");
-		      },
-		    },
-		    language: 'ko-KR'
-		 });
-		<%-- 텍스트 에디터 끝 --%>
+		// 내용 넣어주기 (제목은 HTML에서 넣어줌)
+	        <%-- 텍스트 에디터 시작 --%>
+	 		editor = new toastui.Editor({
+			    el: document.querySelector("#editor"),
+			    height: "270px",
+			    initialValue: '${requestScope.postvo.pcontent}',
+			    initialEditType: "wysiwyg",
+			    hooks: {
+			      addImageBlobHook: function (blob, callback) {
+			        const formData = new FormData();
+			        formData.append("image", blob);
+			        const imageURL = imageUpload(formData);
+			        // console.log(imageURL);
+			        callback(imageURL, "image");
+			      },
+			    },
+			    language: 'ko-KR'
+			 });
+	 		<%-- 텍스트 에디터 끝 --%>
 		
 	});// end of $(document).ready(function(){})-------------------------
+	
+	
+	// 수정하기 버튼 클릭시 
+	function goPostEdit() {
+		
+		// 글제목 유효성 검사
+		const psubject = $("input#psubject").val().trim();
+		console.log("psubject" + psubject);
+		if(psubject == "") {
+			$(".subjectAlert").show();
+			return; // 종료
+		}
+		
+		// 글설명 유효성 검사
+		const psummary = $("input#psummary").val().trim();
+		console.log("psummary" + psummary);
+		if(psummary == "") {
+			$(".summaryAlert").show();
+			return; // 종료
+		}
+		    
+		// 글내용 유효성 검사
+		var pcontent = editor.getHTML();  // (스마트 에디터 사용 할 경우) <p>글내용</p> 와 같이 출력됨.
+		if(pcontent == "<p><br></p>"){
+			$(".contentAlert").show();
+			return;
+		}
+		
+		// 폼(form)을 전송(submit)
+		const frm = document.postEdit_frm;
+        frm.method = "POST";
+        frm.fk_userid.value = "${sessionScope.loginuser.userid}";
+        frm.pcontent.value = pcontent;
+        frm.action = "<%= ctxPath%>/postEditEnd.com";
+        frm.submit();
+        
+	}
 	
 		
 </script>
@@ -182,16 +213,24 @@
 
 			<div id="input_post" class="d-flex flex-column"> 
 				<div class="subject" style="font-weight: 600; font-size: 13.5pt;">제목<span class="error subjectAlert" style="display:none;">제목을 입력해주세요.</span></div>
-				<input type="text" name="postsubject" id="postsubject" size="50" placeholder="제목을 입력해주세요" required> 
+				<input type="text" name="psubject" id="psubject" size="50" value="${requestScope.postvo.psubject}" placeholder="제목을 입력해주세요" required>
+				 
+				<div class="subject" style="font-weight: 600; font-size: 13.5pt;">설명<span class="error summaryAlert" style="display:none;">설명을 입력해주세요.</span></div>
+				<input type="text" name="psummary" id=psummary size="50" value="${requestScope.postvo.psummary}" placeholder="설명을 입력해주세요" required> 
+				
 				<div class="subject" style="font-weight: 600; font-size: 13.5pt;">내용<span class="error contentAlert" style="display:none;">내용을 입력해주세요.</span></div>
 				<!-- <input type="text" name="postcontent" id="postcontent" size="50" placeholder="내용을 입력해주세요" required>  -->
-				<div id="editor" class="editor"></div>
+				<div id="editor" class="editor" name="content"></div>
 			</div>
 			
 			<div class="d-flex flex-column">
 				<button id="btnPostEdit" onclick="goPostEdit()">수정하기</button>
 			</div>
 		</div>
+		<input type="hidden" name="fk_userid" id="fk_userid" value="" />
+		<input type="hidden" name="pno" id="pno" value="${requestScope.postvo.pno}" />
+		<input type="hidden" name="fk_bno" id="fk_bno" value="${requestScope.postvo.fk_bno}" />
+		<input type="hidden" name="pcontent" id="pcontent" value="">
 	</form>
 	
 </body>

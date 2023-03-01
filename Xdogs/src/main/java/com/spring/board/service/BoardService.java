@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.board.model.BoardVO;
+import com.spring.board.model.CommentVO;
 import com.spring.board.model.InterBoardDAO;
 import com.spring.board.model.MemberVO;
 import com.spring.board.model.PostVO;
@@ -33,9 +34,9 @@ public class BoardService implements InterBoardService {
 
 	// 아이디 중복확인
 	@Override
-	public String getIdDuplicateCheck(String useridCheck) {
-		String userid = dao.getIdDuplicateCheck(useridCheck);
-		return userid;
+	public int idDuplicateCheck(String userid) {
+		int n = dao.idDuplicateCheck(userid);
+		return n;
 	}
 
 	// 비밀번호 업데이트
@@ -94,6 +95,59 @@ public class BoardService implements InterBoardService {
 		int n = dao.postAddEnd(postvo);
 	    return n;
 	}
+
+	// 게시물 1개 조회하기
+	@Override
+	public PostVO postView(String pno) {
+		PostVO postdvo = dao.postView(pno);
+		return postdvo;
+	}
+
+	// 게시물 1개 삭제하기 
+	@Override
+	public int postDelEnd(String pno) {
+		int n = dao.postDelEnd(pno);
+	    return n;
+	}
+
+	// 게시물 수정 처리하기
+	@Override
+	public int postEditEnd(PostVO postvo) {
+		int n = dao.postEditEnd(postvo);
+	    return n;
+	}
+
+	// 댓글 조회하기
+	@Override
+	public List<CommentVO> getCommentListPaging(Map<String, String> paraMap) {
+		List<CommentVO> commentList = dao.getCommentListPaging(paraMap);
+		return commentList;
+	}
+
+	// 하나의 게시물당 댓글의 totalPage 수 알아오기
+	@Override
+	public int commentTotalPage(Map<String, String> paraMap) {
+		int totalPage = dao.commentTotalPage(paraMap);
+		return totalPage;
+	}
+
+	// 댓글쓰기(Ajax 처리)
+	@Override
+	public int addComment(CommentVO commentvo) {
+		int n = dao.addComment(commentvo);
+	    return n;
+	}
+
+	// 본인 댓글 삭제하기(Ajax 처리)
+	@Override
+	public int commentDel(String cno) {
+		int n = dao.commentDel(cno); 
+		return n;
+	}
+
+	
+
+
 
 
 	

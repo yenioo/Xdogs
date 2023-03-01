@@ -121,7 +121,7 @@
 	
 	// 게시판 삭제 클릭시
 	function goBoardDel() {
-
+		
 		var chxArr = $("input[name='bno']:checked");
 		var bnoArr = new Array();
 		chxArr.each(function(index, item){
@@ -158,9 +158,10 @@
       // 게시판 추가 팝업창 띄우기 (GET 방식). oneBoardList.java 클래스에 넘겨준다.
       
       if('${sessionScope.loginuser.userid}' == null || '${sessionScope.loginuser.userid}' == '') {
+    		// 회원이 아니라면
 			// $('btnBoardAdd').prop('disabled', true);
 			
-			const bool = confirm("게시판 추가는  회원만 가능합니다. 회원가입 페이지로 이동하시겠습니까?");
+			const bool = confirm("게시판 추가는 회원만 가능합니다. 회원가입 페이지로 이동하시겠습니까?");
 		    if(bool) {
 		    	location.href="<%=ctxPath%>/memberRegister.com";
 		    } else {
@@ -168,26 +169,11 @@
 		    }
 			
 		} else {
-			// $('btnBoardAdd').prop('disabled', false);
-			
+			// 회원이라면
 			const url = "<%= ctxPath%>/boardAdd.com";
 	        window.open(url, "boardAdd", 
 	      			"left=550px, top=100px, width=400px, height=400px"); // 팝업창 띄우기(url, 팝업창이름, "팝업창 크기지정")   *url 은 보여줄 페이지(boardAdd.java) 이다.
 		} 
-		
-		<%-- if(${sessionScope.loginuser.userid} == null || "".equals(${sessionScope.loginuser.userid})) {
-			// 회원이 아니라면
-			
-			$("#btnBoardAdd").attr("disabled", true);
-			
-			const bool = confirm("게시판 추가는  회원만 가능합니다. <br>회원가입 페이지로 이동하시겠습니까?");
-		    if(bool) {
-		    	location.href="<%=ctxPath%>/memberRegister.com";
-		    } else {
-		    	location.href="<%=ctxPath%>/index.com";
-		    }
-		    
-		} --%>
       
 	}
 	
