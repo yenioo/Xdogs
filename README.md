@@ -50,16 +50,18 @@
 ## 🔎 화면설계 및 기능구현
 
 - **로그인**
-<img src = "[Your Image Addr](https://user-images.githubusercontent.com/110097691/222144825-b8a204ac-dffd-4315-acb3-fdf0263d6c7b.png)" width="100" height="60%">
+로그인한 사용자는 커뮤니티를 자유롭게 이용할 수 있습니다.
+계정 저장을 통해 아이디를 저장할 수 있습니다.
+![로그인](https://user-images.githubusercontent.com/110097691/222144825-b8a204ac-dffd-4315-acb3-fdf0263d6c7b.png) 
 
 - **회원가입**
-
+회원가입을 통해 회원이 될 수 있습니다.
+이메일은 아이디로 사용할 수 있으며, 중복확인을 통해 고유한 아이디일 경우 사용이 가능합니다.
 ![회원가입](https://user-images.githubusercontent.com/110097691/222145084-65745b16-d315-464d-9828-d26fe323b0eb.png)
 
 - **정보수정**
-
+회원정보수정 페이지에서 비밀번호 변경이 가능합니다.
 ![회원정보 수정](https://user-images.githubusercontent.com/110097691/222145142-04bd047c-4595-4e65-84af-b140d1f9cdac.png)
-
 
 - **게시판**
 
